@@ -1,0 +1,20 @@
+import os
+import math
+import random as r
+
+def h_layer():
+    pass
+
+LAYERS = [1, 3, 4, 1]
+EPOCH = 1
+
+if not os.path.isfile("weights_biases.txt"):
+	weights = [[round(r.uniform(-0.5, 0.5), 2) for _ in range(LAYERS[n]*LAYERS[n+1])] for n in range(len(LAYERS)-1)]
+	biases = [[0 for _ in range(n)] for n in LAYERS[1:-1]]
+
+	print("Weights and Biases generated and saved in weights_biases.txt")
+	print(f"Weights: {weights}")
+	print(f"Biases: {biases}")
+
+	with open("weights_biases.txt", "w") as f:
+		 f.write(str(weights) + "\n" + str(biases))
