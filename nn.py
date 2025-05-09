@@ -7,16 +7,20 @@ EPOCH = 1
 
 # create file, if doesn't exist, to store weights and biases
 if not os.path.isfile("weights_biases.txt"):
-	weights = [[round(r.uniform(-0.5, 0.5), 2) for _ in range(LAYERS[n]*LAYERS[n+1])] for n in range(len(LAYERS)-1)]
-	biases = [[0 for _ in range(n)] for n in LAYERS[1:-1]]
+	weights = [[str(round(r.uniform(-0.5, 0.5), 2)) for _ in range(LAYERS[n]*LAYERS[n+1])] for n in range(len(LAYERS)-1)]
+	biases = [["0" for _ in range(n)] for n in LAYERS[1:-1]]
 
 	print("Weights and Biases generated and saved in weights.txt and biases.txt respectively")
 	print(f"Weights: {weights}")
 	print(f"Biases: {biases}")
 
 	with open("weights.txt", "w") as f:
+		print("before prep")
+		print(weights)
 		weights = [",".join(i) for i in weights]
 		weights = "\n".join(weights)
+		print("after prep")
+		print(weights)
 		f.write(weights)
 	
 	with open("biases.txt", "w") as f:
@@ -26,6 +30,9 @@ if not os.path.isfile("weights_biases.txt"):
 def get_weights_biases():
 	w = [i.split(",") for i in open("weights.txt", "r").read().split("\n")]
 	b = open("weights.txt", "r").read().split("\n")
+
+	w = [[float(j) for j in i] for i in w]
+	b = [[float(j) for j in i] for i in b]
 	return w, b
 
 w, b = get_weights_biases()
