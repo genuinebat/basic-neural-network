@@ -18,9 +18,23 @@ if not os.path.isfile("weights_biases.txt"):
 		 f.write(str(weights) + "\n" + str(biases))
 
 def get_weights_biases():
-	pass
+	with open("weights_biases.txt", "r") as f:
+		content = f.read()
+		content = content.split("\n")
+		return content[0], content[1]
 
 w, b = get_weights_biases()
+h_layers = []
 
-h_layers = [HLayer() for _ in LAYERS[1:-1]]
+for i in range(len(LAYERS)-1):
+	if i == len(LAYERS)-1:
+		h_layers.append(HLayer(LAYERS[i], LAYERS[i+1], w[i], null))
+	else:
+		h_layers.append(HLayer(LAYERS[i], LAYERS[i+1], w[i], b[i]))	
 
+for e in EPOCH:
+	curr_l_output = 2 #temp input value
+	for l in h_layers:
+		curr_l_output.forward(curr_l_output)
+
+print(f"Model prediction value: {curr_l_output}")
