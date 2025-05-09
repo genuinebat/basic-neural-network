@@ -10,20 +10,31 @@ if not os.path.isfile("weights_biases.txt"):
 	weights = [[round(r.uniform(-0.5, 0.5), 2) for _ in range(LAYERS[n]*LAYERS[n+1])] for n in range(len(LAYERS)-1)]
 	biases = [[0 for _ in range(n)] for n in LAYERS[1:-1]]
 
-	print("Weights and Biases generated and saved in weights_biases.txt")
+	print("Weights and Biases generated and saved in weights.txt and biases.txt respectively")
 	print(f"Weights: {weights}")
 	print(f"Biases: {biases}")
 
-	with open("weights_biases.txt", "w") as f:
-		 f.write(str(weights) + "\n" + str(biases))
+	with open("weights.txt", "w") as f:
+		weights = [",".join(i) for i in weights]
+		weights = "\n".join(weights)
+		f.write(weights)
+	
+	with open("biases.txt", "w") as f:
+		biases = "\n".join(biases)
+		f.write(biases)
 
 def get_weights_biases():
-	with open("weights_biases.txt", "r") as f:
-		content = f.read()
-		content = content.split("\n")
-		return content[0], content[1]
+	w = [i.split(",") for i in open("weights.txt", "r").read().split("\n")]
+	b = open("weights.txt", "r").read().split("\n")
+	return w, b
 
 w, b = get_weights_biases()
+print("weights:")
+print(type(w))
+print(w)
+print("biases:")
+print(type(b))
+print(b)
 h_layers = []
 
 for i in range(len(LAYERS)-1):
@@ -32,9 +43,9 @@ for i in range(len(LAYERS)-1):
 	else:
 		h_layers.append(HLayer(LAYERS[i], LAYERS[i+1], w[i], b[i]))	
 
-for e in EPOCH:
-	curr_l_output = 2 #temp input value
+for e in range(EPOCH):
+	curr_l_output = [2] #temp input value
 	for l in h_layers:
-		curr_l_output.forward(curr_l_output)
+		l.forward(curr_l_output)
 
 print(f"Model prediction value: {curr_l_output}")
