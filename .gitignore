@@ -1,0 +1,61 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.eggs/
+dist/
+build/
+sdist/
+*.egg-info/
+*.whl
+wheels/
+pip-log.txt
+pip-download-cache/
+pip-ephem-wheel-cache/
+.venv
+venv/
+env/
+
+# PyInstaller
+#  Usually these files are written into a _MEIPASS folder, but if the user
+#  manages to cause an exception in the "import" phase of their script,
+#  then it will create a folder named _MEI* in the current directory.
+# _MEI*
+# !.env
+
+# Environments
+.env
+.venv
+venv
+env
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.log
+*.out
+.pytest_cache
+
+# mypy
+mypy-report/
+mypy_report/
+
+# Flake8 and pylint
+.ropeproject
+.pylint.d
+*.swp
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
