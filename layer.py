@@ -16,7 +16,8 @@ class HLayer():
 		for i in range(len(a)):
 			for j in range(len(b[0])):
 				for k in range(len(b)):
-					res[i][j] = a[i][k] * b[k][j]
+					res[i][j] = res[i][j] + (a[i][k] * b[k][j])
+				res[i][j] = round(res[i][j], 2)
 
 		return res
 	
@@ -27,9 +28,10 @@ class HLayer():
 		print(self.weights)
 		print("after multiplication:")
 		print(self.multiply_matrix(inputs, self.weights))
-		print("biases")
-		print(self.biases)
-		print("final res")
-		print(self.add_matrix(self.multiply_matrix(inputs, self.weights), self.biases))
+		#print("biases")
+		#print(self.biases)
+		#print("final res")
+		#print(self.add_matrix(self.multiply_matrix(inputs, self.weights), self.biases))
 
-		return self.add_matrix(self.multiply_matrix(inputs, self.weights), self.biases)
+		#return self.add_matrix(self.multiply_matrix(inputs, self.weights), self.biases)
+		return self.multiply_matrix(inputs, self.weights)
