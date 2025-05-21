@@ -8,6 +8,8 @@ class HLayer():
 		self.biases = _biases
 
 	def add_matrix(self, a, b):
+		if not b:
+			return a
 		return [[a[i][j] + b[i][j] for j in range(len(a[0]))] for i in range(len(a))]
 
 	def multiply_matrix(self, a, b):
@@ -28,10 +30,16 @@ class HLayer():
 		print(self.weights)
 		print("after multiplication:")
 		print(self.multiply_matrix(inputs, self.weights))
-		#print("biases")
-		#print(self.biases)
-		#print("final res")
-		#print(self.add_matrix(self.multiply_matrix(inputs, self.weights), self.biases))
+		print("biases")
+		print(self.biases)
+		print("final res")
+		print(self.add_matrix(self.multiply_matrix(inputs, self.weights), self.biases))
 
-		#return self.add_matrix(self.multiply_matrix(inputs, self.weights), self.biases)
-		return self.multiply_matrix(inputs, self.weights)
+		res = self.multiply_matrix(inputs, self.weights)
+		res = self.add_matrix(res, self.biases)
+		res = self.activate(res)
+
+		return res
+
+	def activate(self, r):
+		return r
