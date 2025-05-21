@@ -9,6 +9,6 @@ EPOCH = 1
 nnm = NeuralNetworkModel(LAYOUT)
 training_data = get_training_data()
 
-res = nnm.train(EPOCH, training_data[0])
+res = nnm.train(EPOCH, training_data)
 
-print(f"Model prediction value(s):\n{res}")
+print(f"\nModel prediction value(s):\n{res}")

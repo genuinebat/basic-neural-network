@@ -28,7 +28,7 @@ class NeuralNetworkModel():
 			with open("./saved_data/biases.txt", "w") as f:
 				f.write(str(biases))
 
-	def get_weights_biases():
+	def get_weights_biases(self):
 		w = ast.literal_eval(open("./saved_data/weights.txt", "r").read())
 		w = [[[float(k) for k in j] for j in i] for i in w]
 
@@ -38,27 +38,28 @@ class NeuralNetworkModel():
 		return w, b
 	
 	def create_h_layers(self):
-		w, b = get_weights_biases()
+		w, b = self.get_weights_biases()
 
 		print(f"Weights retrieved from saved_data: {w}")
 		print(f"Biases retrieved from saved_data: {b}")
 
-		for i in range(len(LAYERS)-1):
-			if i == len(LAYERS)-2:
-				self.h_layers.append(HLayer(self.layout[i], self.layout[i+1], w[i], None))
+		for i in range(len(self.layout)-1):
+			if i == len(self.layout)-2:
+				self.h_layers.append(self.HLayer(self.layout[i], self.layout[i+1], w[i], None))
 			else:
-				self.h_layers.append(HLayer(self.layout[i], self.layout[i+1], w[i], b[i]))	
+				self.h_layers.append(self.HLayer(self.layout[i], self.layout[i+1], w[i], b[i]))	
 
 	def train(self, epoch, data):
 		res = [{"predicted value": 0, "expected value": 0, "cost": 0} for _ in range(epoch)]
 
 		for e in range(epoch):
-			curr_l_output = data[e] 
-			for l in h_layers:
-				curr_l_output = l.forward
-			res[e]["predicted value"] = curr_l_output
-			res[e]["expected value"] = data[e]
-			res[e]["cost"] = abs(data[e] - curr_l_output)
+			curr_l_output = [[data[e][0]]]
+			for l in self.h_layers:
+				curr_l_output = l.forward(curr_l_output)
+				
+			res[e]["predicted value"] = curr_l_output[0][0]
+			res[e]["expected value"] = data[e][1]
+			res[e]["cost"] = abs(data[e][1] - curr_l_output[0][0])
 
 		return res
 
@@ -86,6 +87,7 @@ class NeuralNetworkModel():
 			return res
 		
 		def forward(self, inputs):
+			print("\n")
 			print("input:")
 			print(inputs)
 			print("weights:")
@@ -94,14 +96,12 @@ class NeuralNetworkModel():
 			print("after mulitplication:")
 			print(res)
 			
-			print("\n")
 			print("biases:")
 			print(self.biases)
 			res = self.add_matrix(res, self.biases)
 			print("after adding biases")
 			print(res)
 
-			print("\n")
 			res = self.activate(res)
 			print("after activation")
 			print(res)
