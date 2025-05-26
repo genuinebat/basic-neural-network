@@ -11,6 +11,6 @@ BATCH_SIZE = 10
 nnm = NeuralNetworkModel(LAYOUT)
 training_data = get_training_data()
 
-res = nnm.train(EPOCH, training_data)
+res = nnm.predict(training_data)
 
 print(f"\nModel prediction value(s):\n{res}")

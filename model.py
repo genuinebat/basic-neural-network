@@ -45,28 +45,30 @@ class NeuralNetworkModel():
 
 		for i in range(len(self.layout)-1):
 			if i == len(self.layout)-2:
-				self.h_layers.append(self.HLayer(self.layout[i], self.layout[i+1], w[i], None))
+				self.h_layers.append(self.HLayer(w[i], None))
 			else:
-				self.h_layers.append(self.HLayer(self.layout[i], self.layout[i+1], w[i], b[i]))	
+				self.h_layers.append(self.HLayer(w[i], b[i]))	
 
-	def train(self, epoch, data):
-		res = [{"predicted value": 0, "expected value": 0, "cost": 0} for _ in range(epoch)]
-
+	def train(self, epoch, bs, lr, data):
 		for e in range(epoch):
-			curr_l_output = [[data[e][0]]]
+			pass	
+
+	def predict(self, data):
+		res = [{"predicted value": 0, "expected value": 0, "cost": 0} for _ in data]
+
+		for d in range(len(data)):
+			curr_l_output = [[data[d][0]]]
 			for l in self.h_layers:
 				curr_l_output = l.forward(curr_l_output)
 				
-			res[e]["predicted value"] = curr_l_output[0][0]
-			res[e]["expected value"] = data[e][1]
-			res[e]["cost"] = abs(data[e][1] - curr_l_output[0][0])
+			res[d]["predicted value"] = curr_l_output[0][0]
+			res[d]["expected value"] = data[d][1]
+			res[d]["cost"] = abs(res[d]["predicted value"] - res[d]["expected value"])
 
 		return res
 
 	class HLayer():
-		def __init__(self, _n_in, _n_out, _weights, _biases):
-			self.n_in = _n_in 
-			self.n_out = _n_out
+		def __init__(self,_weights, _biases):
 			self.weights = _weights
 			self.biases = _biases
 
