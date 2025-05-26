@@ -13,26 +13,26 @@ class NeuralNetworkModel():
 
 	def set_weights(self):
 		# create file, if doesn't exist, to store weights and biases
-		if not os.path.isfile("./saved_data/weights.txt") and not os.path.isfile("./saved_data/biases.txt"):
+		if not os.path.isfile("./model_parameters/weights.txt") and not os.path.isfile("./model_parameters/biases.txt"):
 			weights = []
 			for i in range(len(self.layout)-1):
 				weights.append([[str(round(r.uniform(-0.5, 0.5), 2)) for _ in range(self.layout[i+1])] for _ in range(self.layout[i])])
 
 			biases = [[["0" for _ in range(n)]] for n in self.layout[1:-1]]
 
-			print("New Weights and Biases generated and saved in saved_data folder")
+			print("New Weights and Biases generated and saved in model_parameters folder")
 
-			with open("./saved_data/weights.txt", "w") as f:
+			with open("./model_parameters/weights.txt", "w") as f:
 				f.write(str(weights))
 			
-			with open("./saved_data/biases.txt", "w") as f:
+			with open("./model_parameters/biases.txt", "w") as f:
 				f.write(str(biases))
 
 	def get_weights_biases(self):
-		w = ast.literal_eval(open("./saved_data/weights.txt", "r").read())
+		w = ast.literal_eval(open("./model_parameters/weights.txt", "r").read())
 		w = [[[float(k) for k in j] for j in i] for i in w]
 
-		b = ast.literal_eval(open("./saved_data/biases.txt", "r").read())
+		b = ast.literal_eval(open("./model_parameters/biases.txt", "r").read())
 		b = [[[float(k) for k in j] for j in i] for i in b]
 
 		return w, b
@@ -40,8 +40,8 @@ class NeuralNetworkModel():
 	def create_h_layers(self):
 		w, b = self.get_weights_biases()
 
-		print(f"Weights retrieved from saved_data: {w}")
-		print(f"Biases retrieved from saved_data: {b}")
+		print(f"Weights retrieved from model_parameters: {w}")
+		print(f"Biases retrieved from model_parameters: {b}")
 
 		for i in range(len(self.layout)-1):
 			if i == len(self.layout)-2:
@@ -102,12 +102,12 @@ class NeuralNetworkModel():
 			print("after adding biases")
 			print(res)
 
-			res = self.activate(res)
+			res = self.relu(res)
 			print("after activation")
 			print(res)
 
 			return res
 
-		def activate(self, r):
-			return r
+		def relu(self, r):
+			return r if r[0][0] > 0 else [[0 for _ in r[0]]]
 

@@ -5,6 +5,8 @@ def get_training_data():
 
 LAYOUT = [1, 3, 4, 1]
 EPOCH = 1
+LEARNING_RATE = 0.01
+BATCH_SIZE = 10
 
 nnm = NeuralNetworkModel(LAYOUT)
 training_data = get_training_data()
