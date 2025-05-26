@@ -1,7 +1,3 @@
-# About
-
-A simple project to try and create a basic neural network from scratch using purely
-Python without any frameworks or deep learning modules and my own understanding of the maths behind it.
 
 # Neural Network Implementations
 
