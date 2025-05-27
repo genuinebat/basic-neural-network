@@ -11,3 +11,4 @@ https://medium.com/@waadlingaadil/learn-to-build-a-neural-network-from-scratch-y
 https://www.freecodecamp.org/news/building-a-neural-network-from-scratch/
 https://byjus.com/maths/differentiation/
 https://medium.com/@saurabh.chandra.s/decoding-gradients-your-calculus-toolkit-for-neural-networks-bcde0057f804
+https://www.geeksforgeeks.org/backpropagation-in-neural-network/

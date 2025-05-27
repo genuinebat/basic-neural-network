@@ -4,8 +4,9 @@ import ast
 import random as r
 
 class NeuralNetworkModel():
-	def __init__(self, _layout):
+	def __init__(self, _layout, _batch_size):
 		self.layout = _layout 
+		self.batch_size = _batch_size 
 		self.h_layers = []
 
 		self.set_weights()
@@ -16,7 +17,7 @@ class NeuralNetworkModel():
 		if not os.path.isfile("./model_parameters/weights.txt") and not os.path.isfile("./model_parameters/biases.txt"):
 			weights = []
 			for i in range(len(self.layout)-1):
-				weights.append([[str(round(r.uniform(-0.5, 0.5), 2)) for _ in range(self.layout[i+1])] for _ in range(self.layout[i])])
+				weights.append([[str(round(r.uniform(-0.5, 0.5), 5)) for _ in range(self.layout[i+1])] for _ in range(self.layout[i])])
 
 			biases = [[["0" for _ in range(n)]] for n in self.layout[1:-1]]
 
@@ -68,9 +69,10 @@ class NeuralNetworkModel():
 		return res
 
 	class HLayer():
-		def __init__(self,_weights, _biases):
+		def __init__(self,_weights, _biases, _batch_size):
 			self.weights = _weights
 			self.biases = _biases
+			self.batch_size = _batch_size
 
 		def add_matrix(self, a, b):
 			if not b:
