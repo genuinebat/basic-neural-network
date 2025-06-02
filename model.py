@@ -52,7 +52,14 @@ class NeuralNetworkModel():
 
 	def train(self, epoch, bs, lr, data):
 		for e in range(epoch):
-			pass	
+			for i in range(0, len(data), bs):
+				batch_outputs = [[] for _ in bs]
+				for b in range(bs):
+					curr_l_output = data[i+b]
+					for l in self.h_layers:	
+						curr_l_output = l.forward(curr_l_output)
+						outputs_by_batch[b].append(curr_l_output)
+				self.modify_weights(batch_outputs)
 
 	def predict(self, data):
 		res = [{"predicted value": 0, "expected value": 0, "cost": 0} for _ in data]
@@ -68,11 +75,16 @@ class NeuralNetworkModel():
 
 		return res
 
+	def modify_weights(self, batch_outputs):
+		pass
+
+	def save_weights(self):
+		pass
+
 	class HLayer():
-		def __init__(self,_weights, _biases, _batch_size):
+		def __init__(self,_weights, _biases):
 			self.weights = _weights
 			self.biases = _biases
-			self.batch_size = _batch_size
 
 		def add_matrix(self, a, b):
 			if not b:
